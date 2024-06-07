@@ -99,6 +99,13 @@ require('lazy').setup({
   },
 
   {
+	"L3MON4D3/LuaSnip",
+	-- follow latest release.
+	-- install jsregexp (optional!).
+	build = "make install_jsregexp"
+  },
+
+  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -137,15 +144,6 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --       vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
 
@@ -227,9 +225,8 @@ require('lazy').setup({
   {
     'kdheepak/tabline.nvim',
     config = function()
-      require'tabline'.setup {enable = false}
+      require 'tabline'.setup {enable = false}
     end,
-    requires = {'hoob3rt/lualine.nvim', 'kyazdani42/nvim-web-devicons'}
   },
 
   {'neomake/neomake'},
@@ -255,7 +252,48 @@ require('lazy').setup({
   },
 
   {'ggandor/leap.nvim'},
-  {'cappyzawa/trim.nvim'}
+  {'cappyzawa/trim.nvim'},
+
+
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+  }
+
+
 }, {})
 
 -- [[ Setting options ]]
@@ -502,7 +540,7 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+  gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
   bashls = {},
@@ -510,6 +548,7 @@ local servers = {
   yamlls = {},
   tsserver = {},
   --helm_ls = {},
+  terraformls = {},
 
   lua_ls = {
     Lua = {
